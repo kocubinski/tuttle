@@ -3,6 +3,7 @@
             [clojure.string :as str]
             [com.stuartsierra.component :as component]
             [org.purefn.tuttle.kube :as kube]
+            [org.purefn.tuttle.sh :as sh]
             [ring.adapter.jetty :as jetty]
             [ring.middleware.keyword-params :refer (wrap-keyword-params)]
             [ring.middleware.params :refer (wrap-params)]
@@ -46,6 +47,12 @@
         (fn [req]
           (f kf req))))
 
+(defn shell-script
+  [req]
+  (log/info (:params req))
+  (-> (sh/shell-script (get-in req [:params "prefix"] "."))
+      (response)))
+
 ;;--------------------------------------------------------------------------------
 ;; Routes
 
@@ -62,7 +69,9 @@
       "secret"
       {:get {"/" (fetch kube/secrets list-objects)
              ["/" :name] (fetch kube/secret-keys list-keys)
-             ["/" :name "/" :key] (fetch kube/secret-value value)}}}]
+             ["/" :name "/" :key] (fetch kube/secret-value value)}}
+
+      "sh" {:get shell-script}}]
 
     [true not-found]]])
 
