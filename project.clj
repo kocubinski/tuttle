@@ -5,14 +5,11 @@
             :url "http://choosealicense.com/"}
 
   :dependencies [[org.clojure/clojure "1.9.0"]
-                 ;; older version of cheshire which breaks things
-                 [bidi "2.0.17"]
+                 [bidi "2.1.4" :exclusions [ring/ring-core]]
+                 [cheshire "5.8.1"]
                  [com.stuartsierra/component "0.3.2"]
                  [com.taoensso/timbre "4.10.0"]
-                 [ring/ring-codec "1.1.0"]
-                 [ring/ring-core "1.6.3"]
-                 [ring/ring-devel "1.6.3"]
-                 [ring/ring-json "0.4.0"]]
+                 [ring "1.7.1"]]
 
   :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.11"]
                                   [com.stuartsierra/component.repl "0.2.0"]]

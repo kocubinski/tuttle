@@ -20,7 +20,7 @@
    [clojure.tools.namespace.repl :refer [refresh refresh-all clear]]
    [com.stuartsierra.component :as component]
    [com.stuartsierra.component.repl :refer [reset set-init start stop system]]
-   [org.purefn.tuttle]))
+   [org.purefn.tuttle :as tuttle]))
 
 ;; Do not try to load source code from 'resources' directory
 (clojure.tools.namespace.repl/set-refresh-dirs "dev" "src" "test")
@@ -29,7 +29,7 @@
   "Constructs a system map suitable for interactive development."
   []
   (component/system-map
-   ;; TODO
+   :server (tuttle/server)
    ))
 
 (set-init (fn [_] (dev-system)))
