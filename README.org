@@ -6,6 +6,8 @@
 
 #+BEGIN_QUOTE
 Sam Lowry : Can you fix it?
+
 Harry Tuttle : No, I can't. But I can bypass it with one of these.
+
 [Holds up a bizarre device] 
 #+END_QUOTE
