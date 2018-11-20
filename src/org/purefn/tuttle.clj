@@ -27,6 +27,7 @@
 
 (defn- list-objects
   [kf _]
+  (log/info "list-objects")
   (->> (kf)
        (map (comp first #(str/split % #"/") :file))
        (distinct)
@@ -34,11 +35,13 @@
 
 (defn- list-keys
   [kf {:keys [params]}]
+  (log/info "list-keys")
   (->> (kf (:name params))
        (str/join "\n")))
 
 (defn- value
   [kf {:keys [params]}]
+  (log/info "value")
   (->> (kf (:name params) (:key params))))
 
 (defn fetch
@@ -49,7 +52,7 @@
 
 (defn shell-script
   [req]
-  (log/info (:params req))
+  (log/info "shell-script" (:params req))
   (-> (sh/shell-script (get-in req [:params "prefix"] "."))
       (response)))
 

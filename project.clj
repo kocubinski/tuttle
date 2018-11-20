@@ -11,6 +11,8 @@
                  [com.taoensso/timbre "4.10.0"]
                  [ring "1.7.1"]]
 
+  :main org.purefn.tuttle.system
+  
   :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.11"]
                                   [com.stuartsierra/component.repl "0.2.0"]]
                    :source-paths ["dev"]}})
