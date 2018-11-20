@@ -5,9 +5,9 @@
 [[https://m.media-amazon.com/images/M/MV5BZDkyMDVmYTctZWNiZS00ODZlLWI3MGUtNzJkNjg2ZWRhMGI5XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX1777_CR0,0,1777,979_AL_.jpg]]
 
 #+BEGIN_QUOTE
-Sam Lowry : Can you fix it?
+*Sam Lowry:* Can you fix it?
 
-Harry Tuttle : No, I can't. But I can bypass it with one of these.
+*Harry Tuttle:* No, I can't. But I can bypass it with one of these.
 
-[Holds up a bizarre device] 
+/[Holds up a bizarre device]/
 #+END_QUOTE
