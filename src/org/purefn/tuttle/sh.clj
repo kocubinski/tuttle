@@ -7,24 +7,29 @@
   (let [configs (str prefix "/configs")
         secrets (str prefix "/secrets")]
     (str
-     "#!/bin/bash
+     "#!/bin/sh
 mkdir -p " configs "
 mkdir -p " secrets "
-chown `whoami`:`id -g -n` " configs "
-chown `whoami`:`id -g -n` " secrets)))
+chown `whoami`:`id -g` " configs "
+chown `whoami`:`id -g` " secrets)))
 
 (defn shell-script
   [prefix]
-  (->> 
-   (concat
-    (map (fn [{:keys [file data]}]
-           (str "
+  (let [uuid (str (java.util.UUID/randomUUID))]
+    (->> 
+     (concat
+      (map (fn [{:keys [file data]}]
+             (str "
 mkdir -p " prefix "/configs/" (first (str/split file #"/")) "
-echo '" data "' > " (str prefix "/configs/" file)))
-         (kube/configmaps))
-    (map (fn [{:keys [file data]}]
-           (str "
+cat <<" uuid " > " (str prefix "/configs/" file) "
+" data "
+" uuid))
+           (kube/configmaps))
+      (map (fn [{:keys [file data]}]
+             (str "
 mkdir -p " prefix "/secrets/" (first (str/split file #"/")) "
-echo '" data "' > " (str prefix "/secrets/" file)))
-         (kube/secrets)))
-   (apply str (header prefix))))
+cat <<" uuid " > " (str prefix "/secrets/" file) "
+" data "
+" uuid))
+           (kube/secrets)))
+     (apply str (header prefix)))))

@@ -12,5 +12,13 @@
 /[Holds up a bizarre device]/
 #+END_QUOTE
 
-  This tool is to help ship QA/dev configs from the k8s cluster to your laptop or
-  a testing container.  It should *not* run in the production cluster!
+  This tool is to help ship QA/dev configs from the k8s cluster to your
+  laptop or a testing container.  It should *not* run in the production
+  cluster!
+
+*** Usage
+#+BEGIN_SRC 
+sh -c "$(curl -fsS http://tuttle/sh)" 
+
+sh -c "$(curl -fsS http://tuttle/sh\?prefix\=/etc)"
+#+END_SRC

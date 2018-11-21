@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: tuttle
+  namespace: platform
+  labels:
+    component: tuttle
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      component: tuttle
+  template:
+    metadata:
+      labels:
+        component: tuttle
+      name: tuttle
+    spec:
+      containers:
+      - name: tuttle
+        image: @IMAGE@
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 8080
