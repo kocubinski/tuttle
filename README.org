@@ -20,30 +20,30 @@
 Place all configmaps and secrets in the current directory in the folders
 ~./configs~ and ~./secrets~, respectively.
 #+BEGIN_SRC 
-sh -c "$(curl -fsS http://tuttle/sh)" 
+sh -c "$(curl -fsS http://tuttle.qa0.aws.theladders.com/sh)" 
 #+END_SRC
 
 Place all configmaps and secrets in the directories ~/etc/configs~ and
 ~/etc/secrets~, respectively.
 #+BEGIN_SRC 
-sh -c "$(curl -fsS http://tuttle/sh\?prefix\=/etc)"
+sh -c "$(curl -fsS http://tuttle.qa0.aws.theladders.com/sh\?prefix\=/etc)"
 #+END_SRC
 
 *** Exploring
 #+BEGIN_SRC 
-$ curl http://tuttle/ 
+$ curl http://tuttle.qa0.aws.theladders.com/ 
 configmaps
 secrets
 
-$ curl http://tuttle/configmaps/
+$ curl http://tuttle.qa0.aws.theladders.com/configmaps/
 cluster
 couchbase
 elasticsearch
 
-$ curl http://tuttle/configmaps/cluster/
+$ curl http://tuttle.qa0.aws.theladders.com/configmaps/cluster/
 dns.zone
 name
 
-$ curl http://tuttle/configmaps/cluster/dns.zone
+$ curl http://tuttle.qa0.aws.theladders.com/configmaps/cluster/dns.zone
 qa.my-domain.com
 #+END_SRC
