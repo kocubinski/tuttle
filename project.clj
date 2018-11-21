@@ -17,4 +17,5 @@
   
   :profiles {:dev {:dependencies [[org.clojure/tools.namespace "0.2.11"]
                                   [com.stuartsierra/component.repl "0.2.0"]]
+                   :repl-options {:init-ns user}
                    :source-paths ["dev"]}})

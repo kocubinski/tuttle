@@ -8,11 +8,16 @@
             [ring.middleware.keyword-params :refer (wrap-keyword-params)]
             [ring.middleware.params :refer (wrap-params)]
             [ring.middleware.stacktrace :refer (wrap-stacktrace)]
-            [ring.util.response :refer (response)]
+            [ring.util.response :as response]
             [taoensso.timbre :as log]))
 
-;;--------------------------------------------------------------------------------
+;;----------------------------------------------------------------------
 ;; Handlers
+
+(defn- response
+  [body]
+  (-> (response/response body)
+      (response/header "Content-Type" "text/plain")))
 
 (defn- health-check
   [req]
@@ -56,22 +61,23 @@
   (-> (sh/shell-script (get-in req [:params "prefix"] "."))
       (response)))
 
-;;--------------------------------------------------------------------------------
+;;----------------------------------------------------------------------
 ;; Routes
 
 (def routes
   [""
    [["/"
-     {"health" {:get health-check}
+     {"" {:get (constantly (response "configmaps\nsecrets"))}
+      "health" {:get health-check}
 
-      "configmap"
+      "configmaps"
       {:get {"/" (fetch kube/configmaps list-objects)
-             ["/" :name] (fetch kube/configmap-keys list-keys)
+             ["/" :name "/"] (fetch kube/configmap-keys list-keys)
              ["/" :name "/" :key] (fetch kube/configmap-value value)}}
 
-      "secret"
+      "secrets"
       {:get {"/" (fetch kube/secrets list-objects)
-             ["/" :name] (fetch kube/secret-keys list-keys)
+             ["/" :name "/"] (fetch kube/secret-keys list-keys)
              ["/" :name "/" :key] (fetch kube/secret-value value)}}
 
       "sh" {:get shell-script}}]
@@ -83,7 +89,7 @@
       (wrap-params)
       (wrap-stacktrace)))
 
-;;--------------------------------------------------------------------------------
+;;----------------------------------------------------------------------
 ;; Component
 
 (defrecord Server
