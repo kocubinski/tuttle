@@ -1,9 +1,13 @@
 #!/bin/bash
 
 : ${REPO?"Need to set REPO"}
+: ${NAMESPACE?"Need to set NAMESPACE"}
 
-lein clean
-lein uberjar
+IMAGE=$REPO/tuttle:latest
 
-docker build -t $REPO/tuttle:latest .
-docker push $REPO/tuttle:latest
+docker build -t $IMAGE .
+docker push $IMAGE
+
+cat deployment.yaml \
+  | sed -e "s|@IMAGE@|$IMAGE|g;" \
+  | kubectl apply -n $NAMESPACE -f -

@@ -1,8 +1,10 @@
 (defproject org.purefn/tuttle "0.1.0-SNAPSHOT"
-  :description "Fetch Kubernetes configmaps/secrets as a service without auth."
-  :url "https://github.com/theladders/tuttle"
-  :license {:name "TODO: Choose a license"
-            :url "http://choosealicense.com/"}
+  :description "Fetch Kubernetes configmaps/secrets as a service."
+
+  :url "https://github.com/purefnorg/tuttle"
+
+  :license {:name "Eclipse Public License"
+            :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [bidi "2.1.4" :exclusions [ring/ring-core]]

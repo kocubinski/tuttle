@@ -6,7 +6,6 @@ metadata:
     service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
     service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
   name: tuttle
-  namespace: platform
   labels:
     component: tuttle
 spec:
