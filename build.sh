@@ -1,6 +1,7 @@
 #!/bin/bash
+set -e
 
-: ${REPO?"Need to set REPO"}
+[[ -n $REPO ]] || REPO=kocubinski
 : ${NAMESPACE?"Need to set NAMESPACE"}
 
 IMAGE=$REPO/tuttle:latest
