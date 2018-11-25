@@ -8,10 +8,12 @@
         secrets (str prefix "/secrets")]
     (str
      "#!/bin/sh
-mkdir -p " configs "
-mkdir -p " secrets "
-chown `whoami`:`id -g` " configs "
-chown `whoami`:`id -g` " secrets)))
+set -e
+SUDO=sudo
+CONFIGS=" configs "
+SECRETS=" secrets "
+[ -d $CONFIGS ] || mkdir -p $CONFIGS && chown `whoami`:`id -g` $CONFIGS
+[ -d $SECRETS ] || mkdir -p $SECRETS && chown `whoami`:`id -g` $SECRETS")))
 
 (defn shell-script
   [prefix]
@@ -20,16 +22,17 @@ chown `whoami`:`id -g` " secrets)))
      (concat
       (map (fn [{:keys [file data]}]
              (str "
-mkdir -p " prefix "/configs/" (first (str/split file #"/")) "
-cat <<" uuid " > " (str prefix "/configs/" file) "
+mkdir -p $CONFIGS/" (first (str/split file #"/")) "
+cat << '" uuid "' > $CONFIGS/" file "
 " data "
 " uuid))
            (kube/configmaps))
       (map (fn [{:keys [file data]}]
              (str "
-mkdir -p " prefix "/secrets/" (first (str/split file #"/")) "
-cat <<" uuid " > " (str prefix "/secrets/" file) "
+mkdir -p $SECRETS/" (first (str/split file #"/")) "
+cat << '" uuid "' > $SECRETS/" file "
 " data "
 " uuid))
            (kube/secrets)))
      (apply str (header prefix)))))
+
