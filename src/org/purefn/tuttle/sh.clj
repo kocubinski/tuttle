@@ -8,7 +8,7 @@
         secrets (str prefix "/secrets")]
     (str
      "#!/bin/sh
-set -e +x
+set -e
 
 SUDO=$(command -v sudo >/dev/null 2>&1 && echo sudo || true)
 CONFIGS=" configs "
