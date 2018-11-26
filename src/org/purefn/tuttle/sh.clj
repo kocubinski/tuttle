@@ -8,12 +8,13 @@
         secrets (str prefix "/secrets")]
     (str
      "#!/bin/sh
-set -e
-SUDO=sudo
+set -e +x
+
+SUDO=$(command -v sudo >/dev/null 2>&1 && echo sudo || true)
 CONFIGS=" configs "
 SECRETS=" secrets "
-[ -d $CONFIGS ] || mkdir -p $CONFIGS && chown `whoami`:`id -g` $CONFIGS
-[ -d $SECRETS ] || mkdir -p $SECRETS && chown `whoami`:`id -g` $SECRETS")))
+[ -d $CONFIGS ] || $SUDO mkdir -p $CONFIGS && $SUDO chown `whoami`:`id -g` $CONFIGS
+[ -d $SECRETS ] || $SUDO mkdir -p $SECRETS && $SUDO chown `whoami`:`id -g` $SECRETS")))
 
 (defn shell-script
   [prefix]
