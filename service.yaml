@@ -3,8 +3,6 @@ kind: Service
 metadata:
   annotations:
     service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
-    service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
-    service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
   name: tuttle
   labels:
     component: tuttle
@@ -13,6 +11,6 @@ spec:
   - name: http
     port: 80
     targetPort: 8080
-  type: LoadBalancer
+  type: NodePort
   selector:
     component: tuttle
