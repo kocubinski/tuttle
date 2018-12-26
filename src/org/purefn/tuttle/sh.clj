@@ -27,7 +27,7 @@ mkdir -p $CONFIGS/" (first (str/split file #"/")) "
 cat << '" uuid "' > $CONFIGS/" file "
 " data "
 " uuid))
-           (kube/configmaps))
+           (kube/fq-configmaps))
       (map (fn [{:keys [file data]}]
              (str "
 mkdir -p $SECRETS/" (first (str/split file #"/")) "
@@ -36,4 +36,3 @@ cat << '" uuid "' > $SECRETS/" file "
 " uuid))
            (kube/secrets)))
      (apply str (header prefix)))))
-

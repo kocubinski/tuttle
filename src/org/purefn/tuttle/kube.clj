@@ -83,3 +83,36 @@
           (json/parse-string)
           (get-in ["data" k])
           (str/trim)))
+
+;;----------------------------------------------------------------------
+;; Service Configs
+
+(defn service-configs
+  []
+  (-> (sh "kubectl" "get" "service" "-o" "json")
+      (:out)
+      (json/parse-string)
+      (get "items")
+      (->> (filter #(= "ExternalName" (get-in % ["spec" "type"])))
+           (map #(hash-map :name (get-in % ["metadata" "name"])
+                           :external (get-in % ["spec" "externalName"])))
+           (map (juxt :name :external))
+           (into {}))))
+
+(defn fq-configmaps
+  []
+  (let [svc-configs (service-configs)
+        svcs (->> svc-configs
+                  (keys)
+                  (sort-by count)
+                  (reverse))]
+    (map (fn [{:keys [file data]}]
+           {:file file
+            :orig data
+            :data
+            (reduce
+             (fn [data svc]
+               (str/replace-first data (re-pattern svc) (svc-configs svc)))
+             data
+             svcs)})
+         (configmaps))))
