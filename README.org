@@ -47,3 +47,11 @@ name
 $ curl http://tuttle.qa0.aws.theladders.com/configmaps/cluster/dns.zone
 qa.my-domain.com
 #+END_SRC
+
+*** Thoughts
+    This is a pretty big hack, since it allows for unfettered access to configmaps
+    and secrets in a Kubernetes cluster.  While it solves an immediate need, it
+    should be considered (hopefully) temporary as we move towards a more permanent
+    config/secret store.
+
+    I think Harry Tuttle would be proud.
