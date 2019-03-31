@@ -24,14 +24,14 @@ SECRETS=" secrets "
       (map (fn [{:keys [file data]}]
              (str "
 mkdir -p $CONFIGS/" (first (str/split file #"/")) "
-cat << '" uuid "' > $CONFIGS/" file "
+tr -d '\\n' << '" uuid "' > $CONFIGS/" file "
 " data "
 " uuid))
            (kube/configmaps))
       (map (fn [{:keys [file data]}]
              (str "
 mkdir -p $SECRETS/" (first (str/split file #"/")) "
-cat << '" uuid "' > $SECRETS/" file "
+tr -d '\\n' << '" uuid "' > $SECRETS/" file "
 " data "
 " uuid))
            (kube/secrets)))
